@@ -1,0 +1,12 @@
+{
+    "image1": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAFVVVQDQAAAA9f9S3d0AAAD1/1Ld3QBQVfX/X93dAFBV9S9fAAAAAAD1L18AAAAAAPX/XwAAAAAA9f9fAAAAAAD18l8AAAAAAPXyXwAAAABV9f9f3d0AAFX1/1Ld3QAAAPX/Ut3dAAAAVVVVANAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "jump guy"
+    },
+    "*": {
+        "mimeType": "image/x-mkcd-f4",
+        "dataEncoding": "base64",
+        "namespace": "myImages"
+    }
+}
