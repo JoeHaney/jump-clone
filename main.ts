@@ -15,6 +15,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, l
     level += 1
     if (game.ask("Next Level") && level == 1) {
         tiles.setCurrentTilemap(tilemap`level5`)
+        tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
     } else if (level == 2) {
         game.over(true)
     }
