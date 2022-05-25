@@ -7,7 +7,20 @@ scene.onHitWall(SpriteKind.Player, function (sprite, location) {
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    game.reset()
+    if (game.ask("Next level?")) {
+        level += 1
+        if (level == 1) {
+            tiles.setCurrentTilemap(tilemap`level5`)
+            tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
+        } else if (level == 2) {
+            tiles.setCurrentTilemap(tilemap`level0`)
+            tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
+        } else if (level == 3) {
+            game.over(false)
+        }
+    } else if (game.ask("Reset?")) {
+        game.reset()
+    }
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, location) {
     level += 1
