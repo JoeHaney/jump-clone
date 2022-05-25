@@ -7,9 +7,7 @@ scene.onHitWall(SpriteKind.Player, function (sprite, location) {
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (game.ask("Reset?")) {
-        game.reset()
-    }
+    game.reset()
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, location) {
     level += 1
@@ -21,8 +19,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, l
         tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
     } else if (level == 3) {
         game.over(true)
-    } else {
-    	
     }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -120,8 +116,8 @@ let level = 0
 let jump_power = 0
 jump_power = 0
 level = 0
-tiles.setCurrentTilemap(tilemap`level3`)
 scene.setBackgroundColor(15)
+tiles.setCurrentTilemap(tilemap`level3`)
 mySprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
