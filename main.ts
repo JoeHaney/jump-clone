@@ -17,7 +17,12 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, l
         tiles.setCurrentTilemap(tilemap`level5`)
         tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
     } else if (level == 2) {
+        tiles.setCurrentTilemap(tilemap`level0`)
+        tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
+    } else if (level == 3) {
         game.over(true)
+    } else {
+    	
     }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
