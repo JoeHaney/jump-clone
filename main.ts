@@ -49,6 +49,34 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
         mySprite.vx = 0
     }
 })
+function Mod_Jump (num: number) {
+    if (controller.up.isPressed()) {
+        mySprite.vy += num * -1.1
+    } else if (controller.down.isPressed()) {
+        mySprite.vy += num * -0.9
+    } else {
+        mySprite.vy += num * -1
+    }
+    jump_power = 0
+    mySprite.setImage(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . 5 5 . . . . . . . . . . 
+        . . . . 5 5 . . . . . 5 5 . . . 
+        . . . . 5 5 . . . . . 5 5 . . . 
+        . 5 5 5 5 5 5 5 5 5 5 5 5 5 5 . 
+        . 5 f f f f f f f f f f f f 5 . 
+        . 5 f f f f f f f 2 2 f f f 5 . 
+        . 5 f f f 2 2 f f f f f f f 5 . 
+        . 5 2 2 f f f f f f f f 2 2 5 . 
+        . 5 5 5 5 5 5 5 5 5 5 5 5 5 5 . 
+        . . d d d . . . . . . d d d . . 
+        . . d d d . . . . . . d d d . . 
+        . . d d d . . . . . . d d d . . 
+        . d d d d . . . . . . d d d d . 
+        `)
+}
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
         mySprite.vx = 100
@@ -56,7 +84,11 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
-        jump(jump_power)
+        if (Modular_Jump) {
+            Mod_Jump(jump_power)
+        } else {
+            jump(jump_power)
+        }
     } else {
         mySprite.setImage(img`
             . . . . . . . . . . . . . . . . 
@@ -102,12 +134,16 @@ function jump (num: number) {
         `)
 }
 let mySprite: Sprite = null
+let Modular_Jump = false
 let level = 0
 let jump_power = 0
 jump_power = 0
 level = 0
 scene.setBackgroundColor(15)
 tiles.setCurrentTilemap(tilemap`level3`)
+if (game.ask("Do you want to enable", "Control Mode?")) {
+    Modular_Jump = true
+}
 mySprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
