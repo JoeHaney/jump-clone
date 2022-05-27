@@ -79,29 +79,6 @@ controller.A.onEvent(ControllerButtonEvent.Released, function () {
         jump_power = 0
     }
 })
-controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
-    mySprite.setImage(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . 5 5 . . . . . . . . . . 
-        . . . 5 5 5 5 . . . . 5 5 . . . 
-        . 5 5 5 5 5 5 5 5 5 5 5 5 5 5 . 
-        . 5 f f f f f f f f f f f f 5 . 
-        . 5 f f f f f f f 2 2 f f f 5 . 
-        . 5 f f f 2 2 f f f f f f f 5 . 
-        . 5 2 2 f f f f f f f f 2 2 5 . 
-        . 5 5 5 5 5 5 5 5 5 5 5 5 5 5 . 
-        . d d d d d . . . . d d d d d . 
-        . d d d d d . . . . d d d d d . 
-        d d d d d . . . . . . d d d d d 
-        `)
-    if (jump_power < 160) {
-        jump_power += 7.5
-    }
-})
 function jump (num: number) {
     mySprite.vy += num * -1
     jump_power = 0
@@ -155,4 +132,29 @@ scene.cameraFollowSprite(mySprite)
 info.setScore(0)
 game.onUpdateInterval(1000, function () {
     info.changeScoreBy(1)
+})
+game.onUpdateInterval(10, function () {
+    if (controller.A.isPressed()) {
+        mySprite.setImage(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . 5 5 . . . . . . . . . . 
+            . . . 5 5 5 5 . . . . 5 5 . . . 
+            . 5 5 5 5 5 5 5 5 5 5 5 5 5 5 . 
+            . 5 f f f f f f f f f f f f 5 . 
+            . 5 f f f f f f f 2 2 f f f 5 . 
+            . 5 f f f 2 2 f f f f f f f 5 . 
+            . 5 2 2 f f f f f f f f 2 2 5 . 
+            . 5 5 5 5 5 5 5 5 5 5 5 5 5 5 . 
+            . d d d d d . . . . d d d d d . 
+            . d d d d d . . . . d d d d d . 
+            d d d d d . . . . . . d d d d d 
+            `)
+        if (jump_power < 165) {
+            jump_power += 5
+        }
+    }
 })
