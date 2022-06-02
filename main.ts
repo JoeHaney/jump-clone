@@ -8,21 +8,8 @@ scene.onHitWall(SpriteKind.Player, function (sprite, location) {
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     // True if testing levels false otherwise
-    if (!(true)) {
-        if (game.ask("Next level?")) {
-            level += 1
-            if (level == 1) {
-                tiles.setCurrentTilemap(tilemap`level5`)
-                tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
-            } else if (level == 2) {
-                tiles.setCurrentTilemap(tilemap`level0`)
-                tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
-            } else if (level == 3) {
-                game.over(false)
-            }
-        } else if (game.ask("Reset?")) {
-            game.reset()
-        }
+    if (!(false)) {
+        tiles.placeOnTile(mySprite, spawnPoint)
     } else {
         game.reset()
     }
@@ -32,13 +19,16 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, l
     if (game.ask("Next Level") && level == 1) {
         tiles.setCurrentTilemap(tilemap`level5`)
         tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
+        spawnPoint = mySprite.tilemapLocation()
     } else if (level == 2) {
         tiles.setCurrentTilemap(tilemap`level0`)
         tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
+        spawnPoint = mySprite.tilemapLocation()
     } else if (level == 3) {
         tiles.setCurrentTilemap(tilemap`level14`)
         info.startCountdown(30)
         tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
+        spawnPoint = mySprite.tilemapLocation()
     } else {
         game.over(true)
     }
