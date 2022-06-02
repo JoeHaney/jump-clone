@@ -37,6 +37,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, l
         tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
     } else if (level == 3) {
         tiles.setCurrentTilemap(tilemap`level14`)
+        info.startCountdown(30)
         tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
     } else {
         game.over(true)
@@ -45,6 +46,13 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, l
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
         mySprite.vx = -100
+    }
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile9`, function (sprite, location) {
+    if (spawnPoint.row < row) {
+        tiles.placeOnTile(mySprite, spawnPoint)
+    } else {
+        game.over(false)
     }
 })
 controller.right.onEvent(ControllerButtonEvent.Released, function () {
@@ -56,6 +64,19 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
         mySprite.vx = 0
     }
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`flag`, function (sprite, location) {
+    spawnPoint = location
+})
+info.onCountdownEnd(function () {
+    coulumn = 0
+    row += -1
+    for (let index = 0; index < 12; index++) {
+        tiles.setTileAt(tiles.getTileLocation(coulumn, row), assets.tile`myTile9`)
+        tiles.setWallAt(tiles.getTileLocation(coulumn, row), false)
+        coulumn += 1
+    }
+    info.startCountdown(10)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
@@ -109,13 +130,16 @@ function jump (num: number) {
         . d d d d . . . . . . d d d d . 
         `)
 }
+let coulumn = 0
+let spawnPoint: tiles.Location = null
+let row = 0
 let mySprite: Sprite = null
 let level = 0
 let jump_power = 0
 jump_power = 0
 level = 0
 scene.setBackgroundColor(15)
-tiles.setCurrentTilemap(tilemap`level14`)
+tiles.setCurrentTilemap(tilemap`level3`)
 mySprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -138,6 +162,8 @@ tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
 mySprite.ay = 200
 scene.cameraFollowSprite(mySprite)
 info.setScore(0)
+row = 255
+spawnPoint = mySprite.tilemapLocation()
 game.onUpdateInterval(1000, function () {
     info.changeScoreBy(1)
 })
