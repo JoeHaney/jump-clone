@@ -7,8 +7,8 @@ scene.onHitWall(SpriteKind.Player, function (sprite, location) {
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    // True if testing levels false otherwise
-    if (!(false)) {
+    // True to speedRun, false to play normally
+    if (!(true)) {
         tiles.placeOnTile(mySprite, spawnPoint)
     } else {
         game.reset()
@@ -98,6 +98,13 @@ controller.A.onEvent(ControllerButtonEvent.Released, function () {
         jump_power = 0
     }
 })
+controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
+    level = 3
+    tiles.setCurrentTilemap(tilemap`level14`)
+    info.startCountdown(30)
+    tiles.placeOnRandomTile(mySprite, assets.tile`spawn block`)
+    spawnPoint = mySprite.tilemapLocation()
+})
 function jump (num: number) {
     mySprite.vy += num * -1
     jump_power = 0
@@ -154,9 +161,6 @@ scene.cameraFollowSprite(mySprite)
 info.setScore(0)
 row = 255
 spawnPoint = mySprite.tilemapLocation()
-game.onUpdateInterval(1000, function () {
-    info.changeScoreBy(1)
-})
 game.onUpdateInterval(10, function () {
     if (controller.A.isPressed()) {
         mySprite.setImage(img`
@@ -181,4 +185,7 @@ game.onUpdateInterval(10, function () {
             jump_power += 5
         }
     }
+})
+game.onUpdateInterval(100, function () {
+    info.changeScoreBy(1)
 })
